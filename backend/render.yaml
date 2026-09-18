@@ -3,7 +3,7 @@ services:
     name: cova-backend
     runtime: docker
     plan: free
-    dockerfilePath: ./RenderDockerfile
+    dockerfilePath: ./backend/RenderDockerfile
     envVars:
       - key: SECRET_KEY
         sync: false
