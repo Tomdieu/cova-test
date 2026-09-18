@@ -31,8 +31,8 @@ Full-stack task management platform with a Django REST API, a React web dashboar
 ```
 
 - **Backend**: Django REST Framework with JWT authentication, Swagger/ReDoc docs, and MySQL/SQLite support.
-- **Frontend**: React 19 + Vite + Tailwind CSS v4 + shadcn/ui, using Zustand for state and React Router for navigation.
-- **Mobile**: Expo (React Native) with NativeWind, Expo Router, and Reanimated for a native iOS/Android experience.
+- **Frontend**: React 19 + Vite + Tailwind CSS v4 + shadcn/ui, using React Context for state and React Router for navigation.
+- **Mobile**: Expo (React Native) with NativeWind and Expo Router for a native iOS/Android experience.
 
 ---
 
@@ -47,7 +47,7 @@ Full-stack task management platform with a Django REST API, a React web dashboar
 | Auth        | JWT (access + refresh tokens)                   |
 | State       | React Context + useState (web)                  |
 | Navigation  | React Router (web), Expo Router (mobile)        |
-| Animations  | Reanimated (mobile)                             |
+
 
 ---
 
