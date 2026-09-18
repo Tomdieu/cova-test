@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: cova-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/RenderDockerfile
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_ALLOWED_HOSTS
+        sync: false
+      - key: USE_MYSQL
+        value: "true"
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false

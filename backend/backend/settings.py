@@ -20,13 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!sv3le(+rp^ylir#lxvud-%@09-of!+bf=jj-f$vwfuik9+6o0'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-only-key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,192.168.43.85').split(',')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition
@@ -88,14 +86,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 USE_MYSQL = os.getenv('USE_MYSQL', 'False').strip().lower() == 'true'
 
 if USE_MYSQL:
+    DB_OPTIONS = {'charset': 'utf8mb4'}
+    DB_SSL_CA = os.getenv('DB_SSL_CA')
+    if DB_SSL_CA:
+        DB_OPTIONS['ssl'] = {'ca': DB_SSL_CA}
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.getenv('DB_NAME', 'cova'),
             'USER': os.getenv('DB_USER', 'cova'),
-            'PASSWORD': os.getenv('DB_PASSWORD', 'cova_password'),
+            'PASSWORD': os.getenv('DB_PASSWORD', ''),
             'HOST': os.getenv('DB_HOST', 'db'),
             'PORT': os.getenv('DB_PORT', '3306'),
+            'OPTIONS': DB_OPTIONS,
         }
     }
 else:
@@ -142,6 +146,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Email
@@ -185,9 +190,4 @@ SWAGGER_SETTINGS = {
 }
 
 
-CORS_ALLOWED_ORIGINS = [
-    # For vite
-    'http://localhost:5173',
-    # For react native
-    'http://192.168.43.85:8000',
-]
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
